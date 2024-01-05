@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Single+Day&display=swap');
+
+@font-face {
+    font-family: 'seolleimcool-SemiBold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2312-1@1.1/seolleimcool-SemiBold.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.font-link{
+    font-family: 'Diphylleia', serif;
+}
+
+.font-import{
+    font-family: 'Single Day', cursive;
+}
+
+.noonnu{
+    font-family: 'seolleimcool-SemiBold', serif;
+}
+
+.sentences{
+    font-weight: 700;
+    font-size: 16px;
+    /* font-size: 1rem; */
+    /* text-align: left; */
+    /* text-align: right; */
+    text-align: center;
+
+    /* text-decoration */
+    text-decoration: line-through;
+    text-decoration: underline;
+    text-decoration: overline;
+    text-decoration: none;
+
+    line-height: 32px;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+    /* 색깔 지정 방법 */
+    /* 
+    1. 색깔 이름 작성: red, black, pink ..
+    2. rgb(-,-,-) 0~255 사이의 숫자가 들어갈수 있음
+    3. #------ 16진수 숫자를 입력 ex) c358ab
+    16진수로 이루어진 rgb 값 (0~9 와 a,b,c,d,e,f로 이루어진 수)
+    
+    */
+}

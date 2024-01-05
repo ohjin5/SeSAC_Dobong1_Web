@@ -24,11 +24,54 @@
         border-radius: 10px;
         border: none;
       }
+      h3:hover{
+        background-color: black;
+        color: white;
+      }
+
+      input#red:checked + label {
+        background-color: red;
+        color: white;
+        font-weight: 700;
+      }
+
+      input#blue:checked + label {
+        background-color: blue;
+        color: #fff;
+        font-weight: 700;
+      }
+
+      input#yellow:checked + label {
+        background-color: yellow;
+        color: #000;
+        font-weight: 700;
+      }
+
+      textarea:focus{
+        background-color: lightpink;
+        width: 100%;
+      }
+
+      button:active{
+        background-color: gray;
+        color: white;
+      }
+
+
+
     </style>
   </head>
   <body>
     <h3>건의 사항을 적어주세요!</h3>
     <form>
+        <textarea cols="30" rows="10" placeholder="건의사항"></textarea>
+        <input type="checkbox" name="color" id="red" />
+        <label for="red"> 빨강 </label>
+        <input type="checkbox" name="color" id="blue" />
+        <label for="blue"> 파랑 </label>
+        <input type="checkbox" name="color" id="yellow" />
+        <label for="yellow"> 노랑 </label>
+
       <!-- label
         - 명시적 방식: id와 for 맞춰주기
         - 암시적 방식: label 내부에 input 쓰기 

@@ -1,0 +1,134 @@
+.d-block{
+    display: block;
+    background-color: aquamarine;
+    border: 1px solid black;
+    width: 100px;
+    height: 100px;
+    padding: 15px;
+    margin: 20px;
+}
+
+.d-inline{
+    display: inline;
+    background-color: pink;
+    width: 1000px;
+    height: 200px; 
+    /* 부모의 크기를 따라가기 때문에 width, height 조정해도 안됨 */
+    /* padding: 15px; */
+    /* inline에서는 padding 안쓰는게 나음 양옆으로 주는건 괜찮지만 위아래는 안주는게 좋다 */
+    margin: 20px;
+
+}
+
+.d-inline-block{
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    background-color: yellowgreen;
+    border: 1px solid blue;
+    padding: 15px;
+    margin: 20px;
+
+}
+
+/* div{
+    width: auto;
+    height: 200px;
+    background-color: orange;
+} */
+
+.one{
+    display: inline-block;
+    width: 200px;
+    height: 100px;
+    background-color: skyblue;
+    margin-right: 30px;
+}
+
+.two{
+    display: inline-block;
+    width: 200px;
+    height: 100px;
+    background-color: green;
+    margin-right: 30px;
+}
+
+.thr{
+    display: inline-block;
+    width: 200px;
+    height: 100px;
+    background-color: red;
+}
+
+.parent{
+    width: 400px;
+    /* 
+    width를 300px로 바꾸면 min클래스는 400px 유지, max는 같이 줄어든다
+    width를 500px로 바꾸면 max는 400px 유지, min은 같이 늘어남
+    */
+    height: 200px;
+    background-color: red;
+}
+
+.parent > .min{
+    min-width: 400px;
+    height: 100px;
+    background-color: orange;
+}
+
+.parent > .max{
+    max-width: 400px;
+    height: 100px;
+    background-color: blueviolet;
+}
+
+.box {
+    background-color: beige;
+    border: 1px solid black;
+}
+
+.box-px{
+    width: 50px;
+    height: 50px;
+}
+
+.box-view{
+    width: 50vw;
+    height: 50vh;
+}
+
+.box-per{
+    width: 50%;
+    /* height: 50%; */
+}
+
+.rem{
+    font-size: 2rem;
+}
+
+.em{
+    font-size: 2em;
+}
+
+.square{
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+}
+
+.border{
+    background-color: yellow;
+    /* 단축속성: 굵기 모양 색깔 */
+    /* 색깔 여러개 사용가능 */
+    border-color: blue red green violet;
+    border-style: dotted;
+    border-width: 3px;
+    /* border: 3px solid red; */
+}
+
+.rounded{
+    background-color: yellowgreen;
+    /* 50px 부터는 원의 모양이된다 */
+    border-radius: 50px;
+}
