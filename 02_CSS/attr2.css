@@ -115,6 +115,11 @@
     width: 100px;
     height: 100px;
     cursor: pointer;
+    background-color: blue;
+}
+
+.square:active{
+    visibility: hidden;
 }
 
 .border{
@@ -132,3 +137,52 @@
     /* 50px 부터는 원의 모양이된다 */
     border-radius: 50px;
 }
+
+.box-sizing{
+    padding: 20px;
+    border: 15px solid red;
+    background-color: orange;
+}
+
+.content-box{
+    box-sizing: content-box;
+}
+
+.border-box{
+    box-sizing: border-box;
+}
+
+.d-none {
+    display: none;
+    /* display: none; 자리와 속성이 사라짐*/
+    background-color: red;
+}
+.invisible {
+    visibility: hidden;
+  /* visibility: hidden; 자리는 남아있음 속성만 없어짐*/
+  background-color: orangered;
+}
+
+.opacity-0 {
+    opacity: 0.5;
+  /* opacity: 0; 투명하게 만든다 */
+  background-color: tomato;
+}
+
+.overflow-hidden{
+
+}
+
+.overflow-auto{
+
+}
+
+.overflow-scroll{
+
+
+}
+
+.overflow-visible{
+
+}
+

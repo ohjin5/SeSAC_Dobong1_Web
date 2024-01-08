@@ -1,0 +1,74 @@
+body{
+    height: 2000px;
+}
+
+.box{
+    display: inline-block;
+    width: 400px;
+    height: 500px;
+    border: 1px solid black;
+}
+
+.background{
+    /* background-color:palegreen ; */
+    background: red;
+    /* 단축 속성 
+    background: color image repeat position/size */
+    background: linear-gradient(to bottom, black, white, orange);
+}
+
+.background-image{
+    background-image: url('./img/small_img.png');
+
+    /* 1. background-repeat */
+    background-repeat: repeat;
+    background-repeat: repeat-y;
+    background-repeat: repeat-x;
+    background-repeat: no-repeat;
+
+    /* 2. background-position */
+    /* center, bottom, left, right, top의 키워드로 지정 가능 */
+    /* background-position: center; */
+    /* background-position: center top; */
+    /* background-position: 100px 200px; */
+
+
+    /* 3. background-size */
+    /* background-size: 50px; */
+    /* 첫번째 값 가로 두번째값 세로 */
+    /* background-size: 90px, 50px; */
+    /* background-size: contain; */
+    background-size: cover;
+
+    /* 4. background-attachment */
+    background-attachment: fixed;
+}
+
+.lion-image-one{
+    width: 800px;
+    height: 500px;
+    background-color: skyblue;
+    background-image: url('https://item.kakaocdn.net/do/d84248170c2c52303db27306a00fb861f604e7b0e6900f9ac53a43965300eb9a');
+    background-repeat: repeat-x;
+    background-position: center;
+}
+
+.lion-image-two{
+    width: 800px;
+    height: 500px;
+    background-color: skyblue;
+    background-image: url('https://item.kakaocdn.net/do/d84248170c2c52303db27306a00fb861f604e7b0e6900f9ac53a43965300eb9a');
+    background-position: left;
+    background-size: contain;
+    left: 100px;
+    top: 30px;
+}
+
+.lion-image-thr{
+    width: 800px;
+    height: 500px;
+    background-color: skyblue;
+    background-image: url('https://item.kakaocdn.net/do/d84248170c2c52303db27306a00fb861f604e7b0e6900f9ac53a43965300eb9a');
+    background-size: cover;
+    background-position: center;
+}
