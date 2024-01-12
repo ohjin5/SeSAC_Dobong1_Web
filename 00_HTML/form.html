@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>form 구성태그</title>
+</head>
+<body>
+    <form>
+        <label>
+        ID: <input type="text" />
+        </label>
+        <br />
+
+        <label>
+        PW: <input type="password" />
+        </label>
+        <br />
+
+        <label>
+        EMAIL: <input type="email" />
+        </label>
+        <!--그냥버튼 눌러도 아무런 일 발생 x-->
+        <input type="button" value="로그인1" />
+
+        <!--누르면 새로고침 발생-->
+        <input type="submit" value="로그인2" />
+
+        <button>로그인3</button>
+
+        <br/>
+
+        <textarea cols="30" rows="10"></textarea>
+
+        <hr />
+
+        <h5>다음중 input의 type이 아닌 것은?</h5>
+        <label>
+            <input type="checkbox"> alt
+        </label>
+        <label>
+            <input type="checkbox"> text
+        </label>
+        <label>
+            <input type="checkbox"> img
+        </label>
+        <label>
+            <input type="checkbox"> click
+        </label>
+        <label>
+            <input type="checkbox"> date
+        </label>
+
+        <h5>다음중 img 태그의 속성인 것은?</h5>
+        
+        <input type="radio" name="img" id="alt"><label for="alt">alt</label>
+        <input type="radio" name="img" id="bread"><label for="bread">bread</label>
+        <input type="radio" name="img" id="href"><label for="href">href</label>
+        <input type="radio" name="img" id="mouse"><label for="mouse">mouse</label>
+        <input type="radio" name="img" id="dragon" disabled><label for="dragon">dragon</label>
+
+        <br/>
+
+        <hr />
+
+        <select >
+            <optgroup label="빨간꽃">
+                <option value="장미">장미</option>
+                <option value="동백꽃">동백꽃</option>
+                <option value="튤립">튤립</option>
+            </optgroup>
+            <optgroup label="하얀꽃">
+                <option value="벚꽃">벚꽃</option>
+                <option value="매화">매화</option>
+                <option value="개나리">개나리</option>
+            </optgroup>
+        </select>
+        
+
+    </form>
+</body>
+</html>
