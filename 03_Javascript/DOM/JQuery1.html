@@ -5,9 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- 밑에는 jquery쓴다는의미 -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <title>Document</title>
+    <title>jquery 공부</title>
+    <script>
+        function setValue(){
+            //input 태그의 value 값을 설정
+            $("input").val('setting');
+        }
+
+        function getValue(){
+            //input 태그의 value 값을 가져오가
+            alert($('input').val());
+        }
+
+        function changeStyle(){
+            $('span').css('font-size', '28px');
+        }
+
+        function changeAttribute() {
+            $('input').attr('placeholder', 'name');
+            // setAttribute('placeholder', 'name')이랑 같은 느낌
+        }
+
+        function changeText(){
+            $('span').text('jQuery test~');
+            // innerText = ""
+        }
+
+        function changeHTML(){
+            $('p').html('<h3>jQuery html</h3>');
+        }
+    </script>
 </head>
 <body>
-    
+    <input type="text">
+    <button onclick="setValue()">setValue</button>
+    <button onclick="getValue()">getValue</button>
+    <br>
+    <span>안녕</span>
+    <button onclick="changeStyle()">changeStyle</button>
+    <button onclick="changeAttribute()">changeAttribute</button>
+
+    <p>p태그</p>
+    <button onclick="changeText()">changeText</button>
+    <button onclick="changeHTML()">changeHTML</button>
 </body>
 </html>
