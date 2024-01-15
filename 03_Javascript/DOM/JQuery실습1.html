@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fruit Image Viewer</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready(function () {
+       
+            $('.fruit-button').click(function () {
+           
+                var fruit = $(this).data('fruit');
+
+        
+                var imagePath = 'img/' + fruit + '.jfif'; 
+
+                $('#fruitImage').attr('src', imagePath).show()
+            });
+        });
+    </script>
+    <style>
+        /* CSS 스타일링은 선택 사항입니다. */
+        #fruitImage {
+            max-width: 100%;
+            height: auto;
+            display: none; /* 초기에는 이미지를 숨깁니다. */
+        }
+    </style>
+</head>
+<body>
+
+<!-- 과일 버튼들 -->
+<div>
+    <img id="fruitImage" src="" alt="과일 이미지">
+</div>
+<button class="fruit-button" data-fruit="apple">사과</button>
+<button class="fruit-button" data-fruit="banana">바나나</button>
+<button class="fruit-button" data-fruit="grape">포도</button>
+<button class="fruit-button" data-fruit="peach">복숭아</button>
+
+
+
+
+
+</body>
+</html>
