@@ -8,7 +8,17 @@ app.use("/static", express.static(__dirname + "/public"));
 
 app.get("/", (request, response) => {
   //   response.send("hello express!!");
-  response.render("index.ejs");
+
+  /* render의 두번째 인자에서 
+  index.ejs 에서 사용할 정보 전달 */
+  response.render("index.ejs", {
+    btns: ["apple", "banana"],
+    isLogin: true,
+    userInfo: {
+      name: "ohjin",
+      msg: "식사는 맛있게 하셨나요?!",
+    },
+  });
 });
 
 //라우팅
