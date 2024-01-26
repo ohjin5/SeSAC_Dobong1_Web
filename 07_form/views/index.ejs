@@ -15,7 +15,7 @@
       <br />
       <label>
         email:
-        <input type="email" name="email" />
+        <input type="email" name="email" required />
       </label>
       <br />
       <label>
@@ -31,7 +31,15 @@
     <h2>POST 요청</h2>
     <form action="/postForm" method="post">
       <label for="id">ID</label>
-      <input type="text" id="id" name="id" placeholder="id를 입력해주세요." />
+      <input
+        type="text"
+        id="id"
+        name="id"
+        required
+        placeholder="id를 입력해주세요."
+        pattern="^([a-zA-Z0-9가-힣]){4,10}$"
+        title="아이디는 영어 대소문자, 숫자, 한글로 이루어진 4자 이상 10자 이하입니다."
+      />
       <br />
 
       <label for="pw">비밀번호</label>
@@ -39,7 +47,9 @@
         type="password"
         id="pw"
         name="pw"
+        pattern="^([a-z0-9]){8,12}$"
         placeholder="비밀번호를 입력해주세요."
+        required
       />
 
       <fieldset>
@@ -62,5 +72,35 @@
 
       <input type="submit" value="제출" />
     </form>
+
+    <h2>Validation</h2>
+    <form
+      action="/js-form-check"
+      method="post"
+      name="validationForm"
+      target="_blank"
+    >
+      <input
+        type="text"
+        name="id"
+        minlength="1"
+        placeholder="ID를 입력해주세요"
+        title="최소 한글자 이상을 입력해주세요"
+        id="input"
+      />
+      <br />
+      <div>우편물 수령 장소</div>
+      <label>
+        <input type="radio" name="mail" value="회사" required />회사
+      </label>
+      <label> <input type="radio" name="mail" value="자택" />자택 </label>
+      <button>제출</button>
+    </form>
+
+    <div>
+      <a href="/practice1">실습문제1로 이동</a>
+      <br />
+      <a href="/practice2">실습문제2로 이동</a>
+    </div>
   </body>
 </html>
