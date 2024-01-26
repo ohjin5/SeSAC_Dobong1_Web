@@ -24,7 +24,10 @@ app.get("/getForm", function (req, res) {
 app.post("/postForm", function (req, res) {
   // post 요청은 request.body에 담겨져 옵니다!
   console.log(req.body);
-  res.send("포스트 요청 성공!~~");
+  res.render("result.ejs", {
+    title: "GET",
+    userInfo: req.body, //{id2:'', pw2:'', agree:[]}
+  });
 });
 app.listen(PORT, function () {
   console.log(`http://localhost:${PORT}`);
