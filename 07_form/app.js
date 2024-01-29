@@ -76,3 +76,10 @@ app.post("/practice", (req, res) => {
 app.listen(PORT, function () {
   console.log(`http://localhost:${PORT}`);
 });
+
+/* 실습 1 - axiosGetRegister */
+
+app.get("/axios", (req, res) => {
+  console.log(req.query);
+  res.send(req.query);
+});
