@@ -55,6 +55,40 @@ app.get("/open-api", function (req, res) {
   res.render("api");
 });
 
+// 실습문제
+const id = "pororo";
+const pw = "1234";
+
+app.get("/practice1", (req, res) => {
+  res.render("practice1");
+});
+
+app.get("/practice2", (req, res) => {
+  res.render("practice2");
+});
+
+app.get("/axios-practice1", (req, res) => {
+  console.log(req.query);
+  res.send(req.query);
+});
+
+app.post("/axios-practice2", (req, res) => {
+  console.log(req.body);
+  // 서버의 계정정보와, 클라이언트의 계정정보가 일치하는지
+  const { id: clientId, password: clinetPw } = req.body;
+  if (clientId === id && clientPw === pw) {
+    res.send({
+      userInfo: req.body,
+      // ...req.body,
+      isSuccess: true,
+    });
+    // res.send(req.body);
+  } else {
+    //아이디나 패스워드가 일치하지않으면 다른걸 보내야함
+    res.send({ isSuccess: false });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`http://localhost:${PORT}`);
 });
