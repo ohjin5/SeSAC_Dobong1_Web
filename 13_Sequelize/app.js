@@ -1,7 +1,7 @@
 const PORT = 8080;
 const express = require("express");
 const app = express();
-
+const db = require;
 // middleware
 app.set("views", "./views");
 app.set("view engine", "ejs");
@@ -18,6 +18,11 @@ app.use("/", indexRouter);
 // 404 error
 app.get("*", (req, res) => {
   res.render("404");
+});
+
+db.sequelize.sync({ force: false }).then((result) => {
+  // console.log(result);
+  console.log("DB연결 성공");
 });
 
 app.listen(PORT, () => {

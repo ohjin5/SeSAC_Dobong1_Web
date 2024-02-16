@@ -1,4 +1,4 @@
--- Active: 1707101281210@@127.0.0.1@3306@sesac
+-- Active: 1707101296801@@127.0.0.1@3306@sesac
 show tables;
 
 CREATE TABLE visitor(
