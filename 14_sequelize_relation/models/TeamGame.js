@@ -1,35 +1,18 @@
-const TeamGame = function (Sequelize, DataTypes) {
-  // Sequelize는 model/index.js 의 sequelize
-  // Datatypes 는 model/index.js 의 sequelize
-
-  // const model = Sequelize.define(params1, params2, params3);
-  // params1 : 모델 이름 설정
-  // params2 : 칼럼을 정의, (CREATE TABLE 제약조건)
-  // params3 : 모델 옵션
-  const model = Sequelize.define(
+const TeamGameModel = (sequelize, DataTypes) => {
+  const TeamGame = sequelize.define(
     "TeamGame",
     {
       id: {
-        type: DataTypes.STRING(10),
+        type: DataTypes.INTEGER,
         primaryKey: true,
-      },
-      team_id: {
-        type: DataTypes.STRING(10),
-        foreignKey: true,
-      },
-      game_id: {
-        type: DataTypes.STRING(10),
-        foreignKey: true,
+        autoIncrement: true,
       },
     },
     {
-      tableName: "teamgame",
-      timestamp: false,
       freezeTableName: true,
     }
   );
-
-  return model;
+  return TeamGame;
 };
 
-module.exports = TeamGame;
+module.exports = TeamGameModel;

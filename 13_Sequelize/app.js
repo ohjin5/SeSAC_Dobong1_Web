@@ -1,7 +1,8 @@
 const PORT = 8080;
 const express = require("express");
 const app = express();
-const db = require;
+const db = require("./models");
+
 // middleware
 app.set("views", "./views");
 app.set("view engine", "ejs");
@@ -14,6 +15,10 @@ app.use(express.json());
 const indexRouter = require("./routes");
 app.use("/", indexRouter);
 // const indexRouter = require('./routes/index')
+
+// 회원 관리 라우터
+const userRouter = require("./routes/user");
+app.use("/user", userRouter);
 
 // 404 error
 app.get("*", (req, res) => {

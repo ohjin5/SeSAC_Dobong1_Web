@@ -1,37 +1,28 @@
-const Profile = function (Sequelize, DataTypes) {
-  // Sequelize는 model/index.js 의 sequelize
-  // Datatypes 는 model/index.js 의 sequelize
-
-  // const model = Sequelize.define(params1, params2, params3);
-  // params1 : 모델 이름 설정
-  // params2 : 칼럼을 정의, (CREATE TABLE 제약조건)
-  // params3 : 모델 옵션
-  const model = Sequelize.define(
+const ProfileModel = (sequelize, DataTypes) => {
+  const Profile = sequelize.define(
     "Profile",
     {
       profile_id: {
-        type: DataTypes.STRING(10),
+        type: DataTypes.INTEGER,
         primaryKey: true,
-      },
-      player_id: {
-        type: DataTypes.STRING(10),
-        ForeignKey: true,
+        allowNull: false,
+        autoIncrement: true,
       },
       position: {
-        type: DataTypes.STRING(10),
+        type: DataTypes.STRING(63),
+        allowNull: false,
       },
       salary: {
         type: DataTypes.INTEGER,
+        allowNull: false,
       },
     },
     {
-      tableName: "profile",
-      timestamp: false,
       freezeTableName: true,
     }
   );
 
-  return model;
+  return Profile;
 };
 
-module.exports = Profile;
+module.exports = ProfileModel;

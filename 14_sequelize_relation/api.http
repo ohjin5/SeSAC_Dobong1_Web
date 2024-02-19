@@ -1,0 +1,6 @@
+@server=http://http://localhost:8080
+
+
+GET {{server}}/players
+
+GET {{server}}/players/:playerId

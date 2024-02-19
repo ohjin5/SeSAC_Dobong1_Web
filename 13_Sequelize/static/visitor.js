@@ -1,5 +1,4 @@
 const tbody = document.querySelector("tbody");
-
 // 방명록 등록
 // POST /visitor
 function createVisitor() {
@@ -7,7 +6,7 @@ function createVisitor() {
   console.log(form);
 
   if (form.name.value.length === 0 || form.comment.value.length === 0) {
-    alert("이름과 방명록 모두를 기입해주세요!");
+    alert("이름과 방명록 모두를 기입해주세요.");
     return;
   }
 
@@ -17,35 +16,33 @@ function createVisitor() {
   }
 
   axios({
-    method: "POST",
+    method: "post",
     url: "/visitor",
     data: {
       name: form.name.value,
       comment: form.comment.value,
     },
-  }).then((response) => {
-    console.log(response.data); //{id, name, comment}
-    const { data } = response;
+  }).then((res) => {
+    console.log(res.data); // {id, name, comment}
+    const { data } = res;
     const html = `
-    <tr>
+      <tr>
         <td>${data.id}</td>
         <td>${data.name}</td>
         <td>${data.comment}</td>
         <td>
-           <button type="button" onclick="editVisitor(${data.id})">
-           수정
-           </button>
+          <button type="button" onclick="editVisitor(${data.id})">
+          수정
+          </button>
         </td>
         <td>
-           <button
-              type="button"
-              onclick="deleteVisitor(this,${data.id})"
-            >
-              삭제
-            </button>
+          <button type="button"
+           onclick="deleteVisitor(this, ${data.id})">
+           삭제
+          </button>
         </td>
-    </tr>
-    `;
+      </tr>
+      `;
 
     tbody.insertAdjacentHTML("beforeend", html);
   });
@@ -67,34 +64,29 @@ function deleteVisitor(btn, id) {
 
     // 실제 요소 지우기
     // remove
-    // 1. parentElement 이용
+    // 1. parentElement
     btn.parentElement.parentElement.remove();
 
     // 2. closet()
     // 특정 선택자를 가진 가장 가까운 조상 요소를 찾음
-    // console.log(btn.closest(`#tr_${id}`));
     // btn.closest(`#tr_${id}`).remove();
   });
 }
 
 // 방명록 수정
-// 1.수정을 위한 입력창으로 변경,
+// PATCH /visitor
+// 1. 수정을 위한 입력창으로 변경,
 // 2. 수정 버튼을 누르면 기존 데이터가 input 의 value로 들어가게끔
-//    ==> 한 개의 데이터 조회
-
+//    한 개의 데이터 조회
 const btnGroup = document.querySelector("#btn-group");
-// GET /visitor/:id
 function editVisitor(id) {
   console.log(id);
 
   axios({
     method: "get",
     url: `/visitor/${id}`,
-    // params: { // req.query 로 전달됨
-    //   id: id,
-    // },
+    // params: { id: id },
   }).then((res) => {
-    console.log(res);
     const { data } = res;
     console.log(data);
     const form = document.forms["visitor-form"];
@@ -102,9 +94,10 @@ function editVisitor(id) {
     form.comment.value = data.comment;
   });
   const html = `
-  <button type="button" onclick="editDo(${id});">수정</button>
-  <button type="button" onclick="editCancel();">취소</button>
+  <button type="button" onclick="editDo(${id})">수정</button>
+  <button type="button" onclick="editCancel()">취소</button>
   `;
+
   btnGroup.innerHTML = html;
 }
 
@@ -121,10 +114,10 @@ function editDo(id) {
     },
   }).then((res) => {
     // 프론트에서 데이터 변경할 수 있도록
-    const children = document.querySelector(`#tr_${id}`).children;
-    console.log(children);
-    children[1].textContent = form.name.value;
-    children[2].textContent = form.comment.value;
+    const childeren = document.querySelector(`#tr_${id}`).children;
+    console.log(childeren);
+    childeren[1].textContent = form.name.value;
+    childeren[2].textContent = form.comment.value;
 
     editCancel();
   });
@@ -138,6 +131,7 @@ function editCancel() {
   form.comment.value = "";
 
   // 등록 버튼으로 변경
-
-  btnGroup.innerHTML = `<button type="button" onclick="createVisitor();">방명록 등록</button>`;
+  btnGroup.innerHTML = `
+  <button type="button" onclick="createVisitor()">방명록 등록</button>
+  `;
 }
