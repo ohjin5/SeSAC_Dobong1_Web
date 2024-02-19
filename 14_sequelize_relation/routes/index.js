@@ -14,7 +14,7 @@ router.get("/players/:playerId", controller.getPlayer);
 // POST /players
 router.post("/players", controller.postPlayer);
 
-// // PATCH /players/:playerId/team
+// PATCH /players/:playerId/team
 router.patch("/players/:playerId/team", controller.patchPlayer);
 
 // // DELETE /players/:playerId

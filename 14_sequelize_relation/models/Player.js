@@ -1,12 +1,14 @@
-const PlayerModel = (sequelize, DataTypes) => {
-  const Player = sequelize.define(
+const { INTEGER, INET } = require("sequelize");
+
+const PlayerModel = (Sequelize, DataTypes) => {
+  const Player = Sequelize.define(
     "Player",
     {
       player_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        allowNull: false,
         autoIncrement: true,
+        allowNull: false,
       },
       name: {
         type: DataTypes.STRING(60),
@@ -21,7 +23,6 @@ const PlayerModel = (sequelize, DataTypes) => {
       freezeTableName: true,
     }
   );
-
   return Player;
 };
 

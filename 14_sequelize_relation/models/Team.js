@@ -1,5 +1,5 @@
-const TeamModel = (sequelize, DataTypes) => {
-  const Team = sequelize.define(
+const TeamModel = (Sequelize, DataTypes) => {
+  const Team = Sequelize.define(
     "Team",
     {
       team_id: {
@@ -17,7 +17,6 @@ const TeamModel = (sequelize, DataTypes) => {
       freezeTableName: true,
     }
   );
-
   return Team;
 };
 

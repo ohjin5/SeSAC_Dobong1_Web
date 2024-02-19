@@ -106,6 +106,7 @@ exports.deletePlayer = async (req, res) => {
   }
 };
 
+// GET /teams
 exports.getTeams = async (req, res) => {
   try {
     console.log(req.query);
@@ -138,8 +139,52 @@ exports.getTeams = async (req, res) => {
         attributes: ["team_id", "name"],
       });
     }
+    // teams=[] or [{},{}]
+    if (teams.length === 0) res.send("다시 검색하세요.");
+    else res.send(teams);
   } catch (err) {
     console.log("err", err);
     res.status(500).send("server err");
+  }
+};
+
+// GET /teams/:teamId
+// req.params {teamId:1}
+exports.getTeam = async (req, res) => {
+  try {
+    const { teamId } = req.params;
+    const team = await Team.findOne({
+      where: { team_id: teamId },
+    });
+
+    res.send(team);
+  } catch (err) {
+    console.log("err", err);
+    res.status(500).send("server error");
+  }
+};
+
+// GET /teams/:teamId/players
+exports.getTeamPlayers = async (req, res) => {
+  try {
+    // 1. 팀 정보는 안봐도 되고,
+    // 특정 팀의 선수 정보만 확인하기 위해서는 Player 모델에서
+    // teamid 기준으로 조회
+    const { teamId } = req.params;
+    // const teamPlayers = await Player.findAll({
+    //   where: {
+    //     teamid: teamId,
+    //   },
+    // });
+
+    // 2. 특정 팀의 정보와 해당 팀의 선수 정보까지 확인
+    const teamPlayers = await Team.findOne({
+      where: { team_id: teamId },
+      include: [{ model: Player }],
+    });
+    res.send(teamPlayers);
+  } catch (err) {
+    console.log("err", err);
+    res.status(500).send("server error");
   }
 };

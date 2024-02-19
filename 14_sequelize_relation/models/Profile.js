@@ -4,9 +4,9 @@ const ProfileModel = (sequelize, DataTypes) => {
     {
       profile_id: {
         type: DataTypes.INTEGER,
+        autoIncrement: true,
         primaryKey: true,
         allowNull: false,
-        autoIncrement: true,
       },
       position: {
         type: DataTypes.STRING(63),
@@ -21,7 +21,6 @@ const ProfileModel = (sequelize, DataTypes) => {
       freezeTableName: true,
     }
   );
-
   return Profile;
 };
 

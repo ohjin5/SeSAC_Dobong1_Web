@@ -1,8 +1,8 @@
 const express = require("express");
+const { sequelize } = require("./models");
 const app = express();
 const PORT = 8080;
 const router = require("./routes");
-const { sequelize } = require("./models");
 
 app.set("view engine", "ejs");
 app.set("views", "./views");
@@ -15,9 +15,7 @@ sequelize
   .sync()
   .then(() => {
     app.listen(PORT, () => {
-      console.log(`Server is running at http://localhost:${PORT}`);
+      console.log(`http://localhost:${PORT}`);
     });
   })
-  .catch((err) => {
-    console.error("err:", err);
-  });
+  .catch((err) => console.log(err));

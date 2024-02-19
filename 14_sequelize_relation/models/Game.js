@@ -4,8 +4,9 @@ const GameModel = (sequelize, DataTypes) => {
     {
       game_id: {
         type: DataTypes.INTEGER,
-        primary: true,
+        primaryKey: true,
         allowNull: false,
+        autoIncrement: true,
       },
       date: {
         type: DataTypes.DATE,
@@ -20,7 +21,7 @@ const GameModel = (sequelize, DataTypes) => {
       freezeTableName: true,
     }
   );
-
   return Game;
 };
+
 module.exports = GameModel;
