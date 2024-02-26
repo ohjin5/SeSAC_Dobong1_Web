@@ -43,7 +43,15 @@ app.post("/login", (req, res) => {
 });
 
 // token 정보 확인
-app.post("/token", (req, res) => {});
+app.post("/token", (req, res) => {
+  try {
+    console.log(req.headers.authorization);
+    const token = req.headers.authorization.split(" ")[1];
+  } catch (err) {
+    console.log("POST /token", err);
+    res.status(500).send("server error");
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`http://localhost:${PORT}`);
