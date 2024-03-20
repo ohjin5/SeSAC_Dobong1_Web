@@ -12,8 +12,17 @@ import {
   FunctionState3,
   FunctionState4,
 } from "./components/FunctionState";
+import PropsMap from "./components/PropsMap";
+import Alphabet from "./components/Alphabet";
+import PracticeMap2 from "./components/practice/PracticeMap2";
 
 function App() {
+  const dataArr = [
+    { name: "peach", number: 5, price: 5000 },
+    { name: "banana", number: 1, price: 3000 },
+    { name: "apple", number: 10, price: 7000 },
+    { name: "grape", number: 2, price: 8500 },
+  ];
   return (
     <div className="App">
       {/* <h1>hello, props</h1>
@@ -34,12 +43,16 @@ function App() {
         type="책"
       /> */}
       {/* <h1>hello, state</h1> */}
-      <h1>올리기 내리기</h1>
+      {/* <h1>올리기 내리기</h1> */}
       {/* <ClassState /> */}
       {/* <FunctionState1 /> */}
       {/* <FunctionState2 /> */}
-      <FunctionState3 />
-      <FunctionState4 />
+      {/* <FunctionState3 />
+      <FunctionState4 /> */}
+      <h1>map과 filter 사용</h1>
+      {/* <PropsMap arr={dataArr} /> */}
+      {/* <Alphabet /> */}
+      <PracticeMap2 />
     </div>
   );
 }
