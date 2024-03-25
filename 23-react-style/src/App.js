@@ -1,4 +1,5 @@
 import styled, { keyframes } from "styled-components";
+import Sass from "../src/components/Sass";
 import logo from "./logo.svg";
 const ParentDiv = styled.div`
   text-align: center;
@@ -32,7 +33,7 @@ const MyA = styled.a`
 function App() {
   return (
     <ParentDiv>
-      <Header>
+      {/* <Header>
         <Logo src={logo} alt="app" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
@@ -44,7 +45,8 @@ function App() {
         >
           Learn React
         </MyA>
-      </Header>
+      </Header> */}
+      <Sass />
     </ParentDiv>
   );
 }
