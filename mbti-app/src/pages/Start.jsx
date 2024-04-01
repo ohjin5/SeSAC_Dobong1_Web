@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import OrangeButton from "../components/OrangeButton";
 const MainImg = styled.img`
   width: inherit;
 `;
@@ -20,7 +21,7 @@ export default function Start() {
       <SubHeader>
         개발자가 흔히 접하는 상황에 따라서 MBTI 를 알아 봅시다!{" "}
       </SubHeader>
-      <button text="테스트 시작"> 테스트 시작 </button>
+      <OrangeButton text="테스트 시작"> 테스트 시작 </OrangeButton>
     </>
   );
 }
