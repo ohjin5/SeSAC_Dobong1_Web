@@ -2,7 +2,7 @@ import styled from "styled-components";
 const MainImg = styled.img`
   width: inherit;
 `;
-const Header = styled.p`
+const Header = styled.header`
   font-size: 3rem;
 `;
 const SubHeader = styled.p`
@@ -20,7 +20,7 @@ export default function Start() {
       <SubHeader>
         개발자가 흔히 접하는 상황에 따라서 MBTI 를 알아 봅시다!{" "}
       </SubHeader>
-      <a text="테스트 시작"> 테스트 시작 </a>
+      <button text="테스트 시작"> 테스트 시작 </button>
     </>
   );
 }
