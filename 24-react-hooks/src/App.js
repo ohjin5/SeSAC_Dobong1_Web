@@ -3,6 +3,7 @@ import "./App.css";
 import UseMemo from "./components/UseMemo";
 import UseCallback2 from "./components/UseCallback2";
 import UseReducer from "./components/UseReduce";
+import { HookPrac } from "./components/HookPrac";
 
 function App() {
   return (
@@ -10,7 +11,8 @@ function App() {
       <h1>react hook</h1>
       {/* <UseMemo /> */}
       {/* <UseCallback2 /> */}
-      <UseReducer />
+      {/* <UseReducer /> */}
+      <HookPrac />
     </>
   );
 }
