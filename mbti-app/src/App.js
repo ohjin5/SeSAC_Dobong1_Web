@@ -1,5 +1,10 @@
 import styled from "styled-components";
 import Start from "./pages/Start";
+import Mbti from "./pages/Mbti";
+import { useSelector } from "react-redux";
+import GlobalStyle from "./components/GlobalStyle";
+import Show from "./pages/Show";
+
 const Main = styled.main`
   box-sizing: border-box;
   width: 100%;
@@ -8,13 +13,25 @@ const Main = styled.main`
   margin: auto;
   text-align: center;
 `;
+
 function App() {
+  const page = useSelector((state) => state.mbti.page);
+  const survey = useSelector((state) => state.mbti.survey); // length=4
+  console.log(page);
   return (
     <>
+      <GlobalStyle />
       <Main>
-        <Start />
+        {page === 0 ? (
+          <Start />
+        ) : page !== survey.length + 1 ? (
+          <Mbti />
+        ) : (
+          <Show />
+        )}
       </Main>
     </>
   );
 }
+
 export default App;
