@@ -59,7 +59,7 @@ let heroGame_B: Game = {
 // console.log(heroGame_B);
 
 //실습문제 3
-function sum1(a: number, b: number) {
+function sum1(a: number, b: number): number {
   return a + b;
 }
 
@@ -80,11 +80,12 @@ function sum2(...numbers: number[]): number {
 // }
 
 function arrElement<T>(arr: T[], index: number): T | boolean {
-  // 배열 길이 확인 후, 인덱스가 배열 길이 이상인 경우 undefined 반환
   if (index >= arr.length) {
     return false;
   }
   return arr[index];
 }
 
+console.log(arrElement<string>(["a", "b"], 0));
 console.log(arrElement<string>(["a", "b"], 1));
+console.log(arrElement<string>(["a", "b"], 2));
