@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>채팅방입니다.</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css"
+    />
+    <!-- <link rel="stylesheet" href="../css/room.css" /> -->
+    <style>
+      #chatRoom {
+        background-color: skyblue; /* 연한 회색 배경 */
+        border: 1px solid #dee2e6; /* 경계선 */
+        padding: 20px; /* 패딩 */
+        height: 80vh; /* 뷰포트 높이의 50% */
+      }
+
+      #message {
+        width: 100%; /* 입력 필드 폭을 전체로 설정 */
+      }
+
+      #pushButton {
+        display: flex; /* 플렉스박스 레이아웃 적용 */
+        align-items: center; /* 수직 중앙 정렬 */
+      }
+
+      #pushButton #chat {
+        display: flex; /* 폼 내부도 플렉스박스로 설정 */
+        width: 100%; /* 폼의 너비를 전체로 설정 */
+      }
+
+      #pushButton #message {
+        flex-grow: 1; /* 입력 필드가 가능한 많은 공간을 차지하도록 설정 */
+        margin-right: 1px; /* 버튼과의 간격 설정 */
+      }
+
+      #goButton {
+        font-size: 14px;
+        width: 5rem;
+      }
+
+      .my-message {
+        text-align: right; /* 텍스트를 오른쪽 정렬 */
+        background-color: yellow; /* 배경색을 노란색으로 설정 */
+        border: 1px solid black; /* 테두리 색상을 검은색으로 설정 */
+        padding: 5px; /* 내용과 테두리 사이에 약간의 공간 추가 */
+        margin: 2px; /* 상하 마진 설정 */
+        margin-left: auto; /* 왼쪽 마진을 자동으로 설정하여 오른쪽 정렬 */
+        width: 30%; /* 상자의 너비를 50%로 설정 */
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* 약간의 그림자 효과 추가 */
+      }
+
+      .your-message {
+        background-color: white; /* 배경색을 노란색으로 설정 */
+        border: 1px solid black; /* 테두리 색상을 검은색으로 설정 */
+        padding: 5px; /* 내용과 테두리 사이에 약간의 공간 추가 */
+        margin: 2px; /* 상하 마진 설정 */
+        margin-right: auto; /* 왼쪽 마진을 자동으로 설정하여 오른쪽 정렬 */
+        width: 30%; /* 상자의 너비를 50%로 설정 */
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* 약간의 그림자 효과 추가 */
+      }
+    </style>
+  </head>
+  <body>
+    <div id="chatRoom">
+      <!-- ~~가 입장했습니다. -->
+      <div id="users"></div>
+
+      <!-- 채팅방 내용 -->
+      <div id="space"></div>
+    </div>
+    <div id="pushButton">
+      <form id="chat">
+        <input type="text" placeholder="채팅 내용" id="message" />
+        <button id="goButton">보내기</button>
+      </form>
+    </div>
+    <script>
+      const socket = io();
+      const users = document.getElementById("users");
+      const space = document.getElementById("space");
+      const chatForm = document.getElementById("chat");
+      const chattingRoom = "A"; // 채팅방 이름 설정
+      let myId = null; // 현재 사용자의 ID 저장 변수
+
+      socket.on("connect", () => {
+        myId = socket.id; // 소켓 연결 후 ID 할당
+        socket.emit("join", chattingRoom); // 서버에 'join' 이벤트와 함께 채팅방 이름 전송
+      });
+
+      const h2 = document.createElement("h2");
+      h2.innerText = `채팅방 ${chattingRoom}`;
+      document.body.prepend(h2);
+
+      socket.on("userjoin", (notice) => {
+        const p = document.createElement("p");
+        p.textContent = notice;
+        users.append(p);
+        setTimeout(() => {
+          p.remove();
+        }, 2000); // 입장 알림 메시지 2초 후 제거
+      });
+
+      chatForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const message = chatForm.querySelector("#message").value;
+        socket.emit("message", message); // 서버에 'message' 이벤트와 메시지 전송
+        chatForm.querySelector("#message").value = ""; // 입력 필드 초기화
+      });
+
+      socket.on("message_toAll", (message, id) => {
+        const p = document.createElement("p");
+        p.textContent = `${id}: ${message}`;
+        if (id === myId) {
+          p.classList.add("my-message"); // 현재 사용자의 메시지인 경우 오른쪽 정렬
+        } else {
+          p.classList.add("your-message");
+        }
+        space.append(p); // 메시지 표시
+      });
+    </script>
+  </body>
+</html>
