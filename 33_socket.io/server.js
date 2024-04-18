@@ -1,75 +1,77 @@
-const express = require("express");
-const http = require("http");
-const app = express();
 const socketIO = require("socket.io");
-const server = http.createServer(app);
-
-// 소켓이 http모듈로 생성된 서버에 동작
-const io = socketIO(server);
-const PORT = 8080;
-
-app.set("view engine", "ejs");
-
-app.get("/", (req, res) => {
-  //   res.render("client");
-  res.render("room");
-});
-
-app.get("/room", (req, res) => {
-  res.render("room");
-});
-
-io.on("connection", (socket) => {
-  console.log("socket id >>", socket.id);
-  /* socket.on("event_name", (arg1, arg2, arg3, cb) => {
-    console.log(arg1);
-    console.log(arg2);
-    console.log(arg3);
-    cb("응답!");
-  }); */
-
-  //   socket.on("new_message", (message, cb) => {
-  //     console.log(message);
-  //     cb(message);
-  //   });
-
-  socket.on("new_message", (message) => {
-    io.emit("message_render", message);
+function socketHandler(server) {
+  const io = socketIO(server, {
+    cors: {
+      origin: "http://localhost:3000",
+    },
   });
 
-  socket.on("disconnect", () => {
-    console.log(`${socket.id} 연결 종료`);
+  const nickInfo = {};
+  // {socket.id:닉네임1, socket.id: 닉네임2}
+  io.on("connection", (socket) => {
+    // io.emit("notice", `${socket.id}님이 입장하셨습니다.`);
+
+    socket.on("checkNick", (nickname) => {
+      // console.log(nickname);
+
+      // [닉네임사용2] 중복 체크 후
+      // 입장실패, 입장성공 각각의 경우에 대해 클라이언트에게
+      // 데이터 보내주기
+
+      // Object.values(nickInfo)= ['닉네임1','닉네임2']
+      if (Object.values(nickInfo).includes(nickname)) {
+        // 닉네임이 nickInfo에 있을 때[입장 실패]
+        socket.emit("error", "이미 존재하는 닉네임입니다.");
+      } else {
+        // 닉네임이 nickInfo에 없을 때[입장 성공]
+        // (1)일치하는게 없을 때, nickInfo에 닉네임정보 넣기
+        nickInfo[socket.id] = nickname;
+        // (2)입장 성공 닉네임 정보 클라이언트에게 전달
+        socket.emit("entrySuccess", nickname);
+        // (3)입장성공, 전체클라이언트에게 입장 알림 보내주기
+        socket.broadcast.emit(
+          "notice",
+          `${nickInfo[socket.id]}님이 입장하셨습니다.`
+        );
+        // (4)입장성공, 전체 클라이언트에게 nickInfo전달
+        io.emit("updateNicks", nickInfo);
+      }
+    });
+
+    socket.on("disconnect", () => {
+      io.emit("notice", `${nickInfo[socket.id]}님이 퇴장하셨습니다.`);
+      delete nickInfo[socket.id];
+      io.emit("updateNicks", nickInfo);
+    });
+
+    socket.on("send", (msgData) => {
+      console.log(msgData);
+      // msgData={myNick, dm, msg}
+      if (msgData.dm === "all") {
+        // 전체에 메세지 보내기
+        io.emit("message", {
+          id: msgData.myNick,
+          message: msgData.msg,
+        });
+      } else {
+        // dm
+        // (1)io.to(socketid).emit(~~)
+        // 특정 소켓아이디에게만 전달(나 포함x)
+        io.to(msgData.dm).emit("message", {
+          id: msgData.myNick,
+          message: msgData.msg,
+          isDm: true,
+        });
+        // (2)socket.emit(~~)
+        // 나에게만 메세지 보내기
+        socket.emit("message", {
+          id: msgData.myNick,
+          message: msgData.msg,
+          isDm: true,
+        });
+      }
+    });
   });
+}
 
-  // ---------------[room.ejs], 채팅방 만들기 ---------
-  //   console.log("방 만들어지기 전,", socket.rooms);
-  // 2. 클라이언트에게 방 이름을 전달받아서 방 생성
-  socket.on("join", (chatRoom) => {
-    console.log(chatRoom);
-
-    socket.join(chatRoom); // join(채팅방이름) 이용해서 채팅방 만들기
-    // console.log("방 만들어고 나서,", socket.rooms);
-    socket.room = chatRoom;
-
-    // 3. 내가 포함한 방 client에게 입장 메세지 전달
-    // 나빼고 내가 참여한 채팅방 모두에게
-    // socket.broadcast
-    //   .to(chatRoom)
-    //   .emit("userjoin", `[${socket.id}]님이 입장하셨습니다.`);
-
-    // 나 포함 내가 참여한 채팅방 모두에게
-    io.to(chatRoom).emit("userjoin", `[${socket.id}]님이 입장하셨습니다.`);
-  });
-
-  // 6. 하나의 클라이언트에게 메세지를 받아서
-  //    (특정 방의) 전체 클라이언트에게 보낸다.
-  socket.on("message", (message) => {
-    console.log(message);
-
-    io.to(socket.room).emit("message_toAll", message, socket.id);
-  });
-});
-
-server.listen(PORT, () => {
-  console.log(`http://localhost:${PORT}`);
-});
+module.exports = socketHandler;
