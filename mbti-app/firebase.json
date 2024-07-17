@@ -6,13 +6,5 @@
       "**/.*",
       "**/node_modules/**"
     ]
-  },
-  "rewrites": [
-    {
-      "source": "/**"
-    }
-  ],
-  "storage": {
-    "rules": "storage.rules"
   }
 }

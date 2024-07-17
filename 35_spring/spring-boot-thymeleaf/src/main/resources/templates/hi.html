@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p th:text="'안녕하세요. ' + ${msg}">안녕 반가워</p>
+<div th:utext="${msg2}"></div>
+
+<input type="text" th:value="${msg}"/>
+
+<div th:if="${age} >= 20">성인입니다</div>
+<div th:unless="${age} >= 20">미성년자입니다</div>
+
+<div th:switch="${userType}">
+    <div th:case="Admin">권한이 있습니다.</div>
+    <div th:case="User">권한이 없습니다.</div>
+    <div th:case="*">로그인이 필요합니다.</div>
+</div>
+
+<div th:each="fruits:${fruits}">
+    <div th:text="${fruits}"></div>
+</div>
+
+<div th:text="$hello.msg}"></div>
+</body>
+</html>

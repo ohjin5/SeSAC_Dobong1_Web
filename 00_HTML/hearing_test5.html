@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>간이 청각 검사</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        button { margin: 10px; padding: 10px; font-size: 16px; }
+        #volumeControl, #testControls { margin: 20px 0; }
+        #testInfo { margin: 20px 0; font-weight: bold; }
+        #emailForm { display: none; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>간이 청각 검사</h1>
+    <button id="startButton" onclick="startTest()">테스트 시작</button>
+    <div id="testInfo">테스트를 시작하려면 위 버튼을 클릭하세요.</div>
+    <div id="volumeControl" style="display: none;">
+        <button onclick="decreaseVolume()">-</button>
+        <span id="currentVolume">20 dB</span>
+        <button onclick="increaseVolume()">+</button>
+    </div>
+    <div id="testControls" style="display: none;">
+        <button id="nextButton" onclick="nextStep()">다음</button>
+        <button id="endTestButton" onclick="endTest()" style="display: none;">테스트 종료</button>
+    </div>
+    
+    <form id="emailForm" style="display: none;">
+        <input type="email" id="emailInput" placeholder="이메일 주소 입력" required>
+        <button type="submit">결과 전송</button>
+    </form>
+
+    <script>
+        let audioContext;
+        let oscillator;
+        let gainNode;
+        let currentEar = 'right';
+        let currentFrequency = 2000;
+        let currentVolume = 20;
+        let results = [];
+        let testStep = 0;
+        const DEFAULT_VOLUME = 20;
+
+        function initAudio() {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            oscillator = audioContext.createOscillator();
+            gainNode = audioContext.createGain();
+            
+            let panNode = audioContext.createStereoPanner();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(panNode);
+            panNode.connect(audioContext.destination);
+            
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(currentFrequency, audioContext.currentTime);
+            
+            setVolume(currentVolume);
+            changeEar(currentEar);
+            
+            oscillator.start();
+        }
+
+        function startTest() {
+            initAudio();
+            document.getElementById('startButton').style.display = 'none';
+            document.getElementById('volumeControl').style.display = 'block';
+            document.getElementById('testControls').style.display = 'block';
+            updateTestInfo();
+        }
+
+        function setVolume(volume) {
+            currentVolume = volume;
+            const normalizedVolume = Math.min(Math.max(volume, 0), 120) / 120;
+            gainNode.gain.setValueAtTime(normalizedVolume, audioContext.currentTime);
+            document.getElementById('currentVolume').textContent = `${volume} dB`;
+        }
+
+        function changeFrequency(freq) {
+            currentFrequency = freq;
+            oscillator.frequency.setValueAtTime(freq, audioContext.currentTime);
+        }
+
+        function changeEar(ear) {
+            currentEar = ear;
+            let panNode = audioContext.createStereoPanner();
+            gainNode.disconnect();
+            gainNode.connect(panNode);
+            panNode.connect(audioContext.destination);
+            
+            if (ear === 'right') {
+                panNode.pan.setValueAtTime(1, audioContext.currentTime);
+            } else {
+                panNode.pan.setValueAtTime(-1, audioContext.currentTime);
+            }
+        }
+
+        function increaseVolume() {
+            setVolume(Math.min(currentVolume + 10, 120));
+        }
+
+        function decreaseVolume() {
+            setVolume(Math.max(currentVolume - 10, 0));
+        }
+
+        function updateTestInfo() {
+            let info = `${currentEar === 'right' ? '오른쪽' : '왼쪽'} 귀 ${currentFrequency/1000}kHz 검사 중 (${testStep + 1}/4)`;
+            document.getElementById('testInfo').textContent = info;
+        }
+
+        function nextStep() {
+            results.push(currentVolume);
+            testStep++;
+            
+            if (testStep < 4) {
+                setVolume(DEFAULT_VOLUME);
+                
+                if (testStep === 1) {
+                    changeFrequency(4000);
+                } else if (testStep === 2) {
+                    changeEar('left');
+                    changeFrequency(1000);
+                } else if (testStep === 3) {
+                    changeFrequency(6000);
+                }
+                updateTestInfo();
+            } else {
+                completeTest();
+            }
+        }
+
+        function completeTest() {
+            oscillator.stop();
+            document.getElementById('testInfo').textContent = '검사가 완료되었습니다. 테스트 종료 버튼을 눌러주세요.';
+            document.getElementById('volumeControl').style.display = 'none';
+            document.getElementById('nextButton').style.display = 'none';
+            document.getElementById('endTestButton').style.display = 'inline-block';
+        }
+
+        function endTest() {
+            console.log('Test results:', results);
+            document.getElementById('emailForm').style.display = 'block';
+            document.getElementById('testControls').style.display = 'none';
+        }
+
+        document.getElementById('emailForm').onsubmit = function(e) {
+            e.preventDefault();
+            const email = document.getElementById('emailInput').value;
+            console.log('Email:', email);
+            alert('결과가 이메일로 전송되었습니다. (실제 전송은 구현되지 않았습니다)');
+        };
+    </script>
+</body>
+</html>

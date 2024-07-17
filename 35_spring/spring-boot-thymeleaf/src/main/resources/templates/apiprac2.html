@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Submission</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <h2>사용자 정보 입력</h2>
+  <form id="userForm">
+    <label for="name">이름:</label><br>
+    <input type="text" id="name" name="name"><br>
+
+    <label for="gender">성별:</label><br>
+    <select id="gender" name="gender">
+      <option value="male">남성</option>
+      <option value="female">여성</option>
+    </select><br>
+
+    <label for="birthdate">생년월일:</label><br>
+    <input type="date" id="birthdate" name="birthdate"><br>
+
+    <label for="interests">관심사:</label><br>
+    <input type="checkbox" name="interests" value="여행">여행
+    <input type="checkbox" name="interests" value="패션">패션
+    <input type="checkbox" name="interests" value="음식">음식
+    <br>
+
+    <input type="submit" value="제출">
+  </form>
+
+  <script>
+    document.getElementById('userForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const formData = new FormData(this);
+      const data = {};
+      formData.forEach((value, key) => {
+        if (key === 'interests') {
+          if (!data[key]) data[key] = [];
+          data[key].push(value);
+        } else {
+          data[key] = value;
+        }
+      });
+
+      axios.post('/submit', data)
+        .then(response => {
+          // 응답 처리 로직 추가
+          console.log('성공:', response.data);
+          alert('폼이 성공적으로 제출되었습니다.');
+        })
+        .catch(error => {
+          // 에러 처리 로직 추가
+          console.error('에러:', error);
+          alert('폼 제출 중 오류가 발생했습니다.');
+        });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Axios CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <title>게시판</title>
+  <style>
+    table {
+        margin-top: 10px;
+        border: 1px solid black;
+        border-collapse: collapse;
+        width: 60%;
+    }
+    th, td {
+        border: 1px solid black;
+        padding: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h2>게시판</h2>
+  <form id="boardForm">
+    <input type="text" name="title" placeholder="제목">
+    <input type="text" name="content" placeholder="내용">
+    <input type="text" name="writer" placeholder="작성자">
+    <button type="button" onclick="insertBoard()">작성</button>
+  </form>
+  <table>
+    <tr>
+      <th>No.</th>
+      <th>ID</th>
+      <th>제목</th>
+      <th>작성자</th>
+      <th>작성일</th>
+      <th>수정</th>
+      <th>삭제</th>
+    </tr>
+    <tr th:each="board:${boards}">
+      <td th:text="${board.title}"></td>
+      <td th:text="${board.id}"></td>
+      <td th:text="${board.content}"></td>
+      <td th:text="${board.writer}"></td>
+      <td th:text="${board.register}"></td>
+      <td><button type="button" th:value="${board.id}" onclick="updateBoard(this.value)">수정</button></td>
+      <td><button type="button" th:value="${board.id}" onclick="deleteBoard(this.value)">삭제</button></td>
+    </tr>
+  </table>
+  <script>
+    const form = document.getElementById("boardForm");
+    // 작성
+    function insertBoard() {
+      const data = {
+        title: form.title.value,
+        content: form.content.value,
+        writer: form.writer.value,
+      }
+      axios.post("/board", data).then((res)=>{
+        alert("등록을 완료했습니다");
+        console.log(res.data);
+        window.location.reload();
+      })
+    }
+    // 수정
+    function updateBoard(id) {
+      console.log("클릭한 id는", id);
+      const data = {
+        title: form.title.value,
+        content: form.content.value,
+        writer: form.writer.value,
+      }
+      // 값이 공백인지 확인하는 if
+      if (data.title.trim() === '' || data.content.trim() === '' || data.writer.trim() === '') {
+        alert("제목, 내용, 작성자 모두 입력해주세요");
+        return;
+      }
+      axios.patch(`/board/${id}`, data).then((res)=>{
+        alert("수정을 완료했습니다");
+        console.log(res.data);
+        window.location.reload();
+      })
+    }
+    // 삭제
+    function deleteBoard(id) {
+      console.log("클릭한 id는", id);
+      axios.delete(`/board/${id}`).then((res)=>{
+        alert("삭제를 완료했습니다");
+        console.log(res.data);
+        window.location.reload();
+      })
+    }
+  </script>
+</body>
+</html>
